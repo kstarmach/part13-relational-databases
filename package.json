@@ -1,0 +1,28 @@
+{
+  "name": "part13-relational-databases",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000p\u0000a\u0000r\u0000t\u00001\u00003\u0000-\u0000r\u0000e\u0000l\u0000a\u0000t\u0000i\u0000o\u0000n\u0000a\u0000l\u0000-\u0000d\u0000a\u0000t\u0000a\u0000b\u0000a\u0000s\u0000e\u0000s\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kstarmach/part13-relational-databases.git"
+  },
+  "author": "Kamil Starmach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kstarmach/part13-relational-databases/issues"
+  },
+  "homepage": "https://github.com/kstarmach/part13-relational-databases#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.21",
+    "pg": "^8.10.0",
+    "sequelize": "^6.29.3"
+  }
+}

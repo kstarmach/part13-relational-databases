@@ -45,10 +45,41 @@ app.get('/api/blogs', async (req, res) => {
   res.json(blogs)
 })
 
+app.get('/api/blogs/:id', async (req, res) => {
+  const blog = await Blog.findByPk(req.params.id)
+  if (blog) {
+    console.log(blog.toJSON())
+    res.json(blog)
+  } else {
+    res.status(404).end()
+  }
+})
+
+app.put('/api/blogs/:id', async (req, res) => {
+  const blog = await Blog.findByPk(req.params.id)
+  if (blog) {
+    //blog.important = req.body.important
+    await blog.save()
+    res.json(blog)
+  } else {
+    res.status(404).end()
+  }
+})
+
 app.post('/api/blogs', async (req, res) => {
   console.log(req.body)
   const blog = await Blog.create(req.body)
   res.json(blog)
+})
+
+app.delete('/api/blogs/:id', async (req, res) => {
+  const blog = await Blog.findByPk(req.params.id)
+  if (blog) {
+    await blog.destroy()
+    res.status(204).end()
+  } else {
+    res.status(404).end()
+  }
 })
 
 const PORT = process.env.PORT || 3001

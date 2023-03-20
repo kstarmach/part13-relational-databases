@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { tokenExtractor } = require('../util/middleware')
+const { tokenExtractor, isAdmin } = require('../util/middleware')
 const { User, Blog } = require('../models')
 
 router.get('/', async (req, res) => {

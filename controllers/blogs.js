@@ -27,17 +27,13 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', tokenExtractor, async (req, res) => {
-  try {
-    const user = await User.findByPk(req.decodedToken.id)
-    const blog = await Blog.create({
-      ...req.body,
-      userId: user.id,
-      date: new Date(),
-    })
-    res.json(blog)
-  } catch (error) {
-    return res.status(400).json({ error })
-  }
+  const user = await User.findByPk(req.decodedToken.id)
+  const blog = await Blog.create({
+    ...req.body,
+    userId: user.id,
+    date: new Date(),
+  })
+  res.json(blog)
 })
 
 router.get('/:id', blogFinder, async (req, res, next) => {
@@ -68,15 +64,5 @@ router.put('/:id', blogFinder, async (req, res) => {
     res.status(404).end()
   }
 })
-
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
-
-  if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-  }
-
-  next(error)
-}
 
 module.exports = router

@@ -1,4 +1,4 @@
-const { Model, DataTypes, INTEGER } = require('sequelize')
+const { Model, DataTypes } = require('sequelize')
 
 const { sequelize } = require('../util/db')
 
@@ -22,8 +22,15 @@ Blog.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 1991,
+        max: new Date().getFullYear(),
+      },
+    },
     likes: {
-      type: INTEGER,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
     },
   },

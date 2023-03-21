@@ -1,9 +1,13 @@
 const router = require('express').Router()
-const { blogFinder, tokenExtractor } = require('../util/middleware')
+const {
+  blogFinder,
+  tokenExtractor,
+  validateToken,
+} = require('../util/middleware')
 const { Blog, User } = require('../models')
 const { Op } = require('sequelize')
 
-router.get('/', async (req, res) => {
+router.get('/', validateToken, async (req, res) => {
   const blogs = await Blog.findAll({
     order: [['likes', 'DESC']],
     attributes: { exclude: ['userId'] },

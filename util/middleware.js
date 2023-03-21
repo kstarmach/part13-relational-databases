@@ -1,4 +1,4 @@
-const { Blog } = require('../models')
+const { Blog, ActiveSesions } = require('../models')
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('./config')
 
@@ -41,6 +41,28 @@ const tokenExtractor = (req, res, next) => {
   next()
 }
 
+const validateToken = async (req, res, next) => {
+  const authorization = req.get('authorization')
+  if (!authorization) return res.status(401).send({ message: 'Missing token' })
+
+  const token = authorization.substring(7)
+  if (!token) {
+    return res.status(401).send({ message: 'Missing token' })
+  }
+
+  const active_sessions = await ActiveSesions.findOne({
+    where: { token: token },
+  })
+
+  if (!active_sessions) {
+    return res.status(401).json({ error: 'token is not valid try login again' })
+  }
+
+  req.active_sessions = active_sessions
+
+  next()
+}
+
 const isAdmin = async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id)
   if (!user.admin) {
@@ -54,4 +76,5 @@ module.exports = {
   errorHandler,
   tokenExtractor,
   isAdmin,
+  validateToken,
 }
